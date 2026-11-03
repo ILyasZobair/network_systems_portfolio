@@ -1,0 +1,1129 @@
+<!DOCTYPE html>
+<html lang="en" class="dark scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ilyas Zobair // IT Network & Systems Administrator</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        net: {
+                            black: '#0a0d14',
+                            dark: '#101622',
+                            panel: 'rgba(16, 22, 34, 0.82)',
+                            border: 'rgba(0, 216, 255, 0.22)',
+                            cyan: '#00d8ff',
+                            blue: '#0066ff',
+                            green: '#00ff88',
+                            purple: '#9d4edd',
+                            amber: '#ffb703',
+                            gray: '#94a3b8'
+                        }
+                    },
+                    fontFamily: {
+                        mono: ['Fira Code', 'JetBrains Mono', 'Consolas', 'monospace'],
+                        sans: ['Inter', 'sans-serif']
+                    },
+                    boxShadow: {
+                        'neon-cyan': '0 0 15px rgba(0, 216, 255, 0.35)',
+                        'neon-green': '0 0 15px rgba(0, 255, 136, 0.35)',
+                        'neon-blue': '0 0 15px rgba(0, 102, 255, 0.35)'
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500;700&family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <!-- Three.js CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <style>
+        body {
+            background-color: #0a0d14;
+            color: #e2e8f0;
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0a0d14;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #1e293b;
+            border-radius: 4px;
+            border: 1px solid rgba(0, 216, 255, 0.2);
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #00d8ff;
+        }
+
+        /* Glassmorphism Panel */
+        .glass-panel {
+            background: rgba(16, 22, 34, 0.82);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(0, 216, 255, 0.18);
+        }
+
+        .glass-panel:hover {
+            border-color: rgba(0, 216, 255, 0.45);
+        }
+
+        .net-grid-bg {
+            background-image: linear-gradient(to right, rgba(0, 216, 255, 0.03) 1px, transparent 1px),
+                              linear-gradient(to bottom, rgba(0, 216, 255, 0.03) 1px, transparent 1px);
+            background-size: 32px 32px;
+        }
+
+        /* Glow utilities */
+        .glow-text-cyan {
+            text-shadow: 0 0 12px rgba(0, 216, 255, 0.6);
+        }
+        .glow-text-green {
+            text-shadow: 0 0 12px rgba(0, 255, 136, 0.6);
+        }
+
+        /* CLI Terminal Cursor */
+        .cli-cursor::after {
+            content: '█';
+            display: inline-block;
+            margin-left: 3px;
+            animation: blink 1s infinite;
+            color: #00ff88;
+        }
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+    </style>
+</head>
+<body class="net-grid-bg text-gray-200 antialiased selection:bg-cyan-500 selection:text-black">
+
+    <!-- 3D Background Interactive Canvas -->
+    <canvas id="bg-3d-canvas" class="fixed top-0 left-0 w-full h-full -z-10 pointer-events-none"></canvas>
+
+    <!-- Navigation Header -->
+    <header class="fixed top-0 left-0 w-full z-50 glass-panel border-b border-net-border/30 px-6 py-4 transition-all duration-300">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <!-- Brand Logo -->
+            <a href="#hero" class="flex items-center space-x-3 group">
+                <div class="w-10 h-10 rounded-lg bg-net-dark border border-net-cyan flex items-center justify-center text-net-cyan shadow-neon-cyan group-hover:scale-105 transition-transform">
+                    <i class="fa-solid fa-network-wired text-lg"></i>
+                </div>
+                <div class="flex flex-col">
+                    <span class="font-mono text-lg font-bold tracking-wider text-white flex items-center gap-1">
+                        ILYAS<span class="text-net-cyan">.ZOBAIR</span>
+                    </span>
+                    <span class="text-[10px] font-mono text-net-green tracking-widest uppercase">IT Network & Systems Administrator</span>
+                </div>
+            </a>
+
+            <!-- Navigation Links -->
+            <nav class="hidden lg:flex items-center space-x-8 font-mono text-xs">
+                <a href="#about" class="text-gray-400 hover:text-net-cyan transition-colors flex items-center gap-1.5"><span class="text-net-cyan">01.</span>// ABOUT</a>
+                <a href="#topology" class="text-gray-400 hover:text-net-cyan transition-colors flex items-center gap-1.5"><span class="text-net-cyan">02.</span>// INFRASTRUCTURE</a>
+                <a href="#skills" class="text-gray-400 hover:text-net-cyan transition-colors flex items-center gap-1.5"><span class="text-net-cyan">03.</span>// TECHNICAL_SKILLS</a>
+                <a href="#projects" class="text-gray-400 hover:text-net-cyan transition-colors flex items-center gap-1.5"><span class="text-net-cyan">04.</span>// PROJECTS</a>
+                <a href="#terminal" class="text-gray-400 hover:text-net-green transition-colors flex items-center gap-1.5"><span class="text-net-green">05.</span>// CLI_SHELL</a>
+                <a href="#contact" class="text-gray-400 hover:text-net-cyan transition-colors flex items-center gap-1.5"><span class="text-net-cyan">06.</span>// CONTACT</a>
+            </nav>
+
+            <!-- Action CTA -->
+            <div class="flex items-center gap-4">
+                <a href="#terminal" class="px-4 py-2 text-xs font-mono rounded bg-transparent border border-net-green text-net-green hover:bg-net-green/10 hover:shadow-neon-green transition-all duration-300 flex items-center gap-2">
+                    <span class="w-2 h-2 rounded-full bg-net-green animate-pulse"></span>
+                    CLI TERMINAL
+                </a>
+                
+                <button id="mobile-menu-btn" class="lg:hidden text-gray-300 hover:text-net-cyan focus:outline-none">
+                    <i class="fa-solid fa-bars text-xl"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Drawer -->
+        <div id="mobile-menu" class="hidden lg:hidden pt-4 pb-2 border-t border-net-border/20 mt-4 flex flex-col space-y-3 font-mono text-xs">
+            <a href="#about" class="text-gray-300 hover:text-net-cyan px-2 py-1">// ABOUT</a>
+            <a href="#topology" class="text-gray-300 hover:text-net-cyan px-2 py-1">// INFRASTRUCTURE</a>
+            <a href="#skills" class="text-gray-300 hover:text-net-cyan px-2 py-1">// TECHNICAL SKILLS</a>
+            <a href="#projects" class="text-gray-300 hover:text-net-cyan px-2 py-1">// PROJECTS</a>
+            <a href="#terminal" class="text-gray-300 hover:text-net-green px-2 py-1">// CLI_SHELL</a>
+            <a href="#contact" class="text-gray-300 hover:text-net-cyan px-2 py-1">// CONTACT</a>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="hero" class="min-h-screen pt-32 pb-20 px-6 flex items-center justify-center relative">
+        <div class="max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+            
+            <!-- Hero Left Content -->
+            <div class="lg:col-span-7 flex flex-col items-start space-y-6">
+                
+                <!-- Network Operational Status -->
+                <div class="inline-flex items-center gap-3 px-3 py-1.5 rounded-full glass-panel border border-net-green/40 text-xs font-mono text-net-green">
+                    <span class="relative flex h-2.5 w-2.5">
+                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-net-green opacity-75"></span>
+                        <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-net-green"></span>
+                    </span>
+                    INFRASTRUCTURE ONLINE // GATEWAY 192.168.1.1 ACTIVE
+                </div>
+
+                <!-- Main Name and Title -->
+                <div class="space-y-2">
+                    <h2 class="text-net-cyan font-mono text-xs sm:text-sm tracking-widest uppercase">// NETWORK & SYSTEMS ADMINISTRATION SPECIALIST</h2>
+                    <h1 class="text-4xl sm:text-6xl font-extrabold text-white tracking-tight leading-none">
+                        ILYAS ZOBAIR <br>
+                        <span class="text-transparent bg-clip-text bg-gradient-to-r from-net-cyan via-blue-400 to-net-green glow-text-cyan">
+                            ENTERPRISE INFRASTRUCTURE
+                        </span>
+                    </h1>
+                </div>
+
+                <!-- Typing Dynamic Text -->
+                <div class="h-10 text-base sm:text-xl font-mono text-gray-300 flex items-center">
+                    <span class="text-net-cyan mr-3">&gt;</span>
+                    <span id="typing-text" class="cli-cursor text-net-green font-semibold"></span>
+                </div>
+
+                <p class="text-gray-400 max-w-xl text-sm sm:text-base leading-relaxed">
+                    Designing, configuring, and maintaining high-availability enterprise networks and systems. Expert in Cisco Routing & Switching (OSPF, RIPv2, NAT/PAT, ACLs, WLC), Windows Server 2022 (Active Directory, DNS Conditional Forwarding, DHCP), VMware virtual environments, and Dahua DSS Express IP surveillance architectures.
+                </p>
+
+                <!-- Action Buttons -->
+                <div class="flex flex-wrap gap-4 pt-4 font-mono text-xs sm:text-sm">
+                    <a href="#topology" class="px-6 py-3 rounded-lg bg-net-cyan text-black font-bold hover:bg-cyan-400 shadow-neon-cyan transition-all duration-300 flex items-center gap-2">
+                        <i class="fa-solid fa-sitemap"></i> VIEW TOPOLOGY ARCHITECTURE
+                    </a>
+                    <a href="#contact" class="px-6 py-3 rounded-lg glass-panel text-white font-medium border border-net-border hover:border-net-cyan hover:shadow-neon-cyan transition-all duration-300 flex items-center gap-2">
+                        <i class="fa-solid fa-paper-plane text-net-cyan"></i> GET IN TOUCH
+                    </a>
+                </div>
+
+                <!-- Core Badges -->
+                <div class="pt-6 border-t border-gray-800 w-full flex items-center gap-6 text-gray-500 font-mono text-xs">
+                    <span>STACK:</span>
+                    <div class="flex flex-wrap gap-4 text-xs sm:text-sm text-gray-300">
+                        <span class="flex items-center gap-1.5 hover:text-net-cyan"><i class="fa-solid fa-network-wired text-net-cyan"></i> Cisco IOS</span>
+                        <span class="flex items-center gap-1.5 hover:text-net-green"><i class="fa-brands fa-windows text-net-green"></i> Win Server 2022</span>
+                        <span class="flex items-center gap-1.5 hover:text-net-purple"><i class="fa-solid fa-server text-net-purple"></i> VMware ESXi</span>
+                        <span class="flex items-center gap-1.5 hover:text-net-amber"><i class="fa-solid fa-video text-net-amber"></i> DSS Express</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Hero Right 3D Visualizer -->
+            <div class="lg:col-span-5">
+                <div class="relative glass-panel rounded-2xl p-6 border border-net-border shadow-2xl overflow-hidden group">
+                    <!-- Top Window Controls -->
+                    <div class="flex items-center justify-between border-b border-gray-800 pb-4 mb-4">
+                        <div class="flex items-center space-x-2">
+                            <span class="w-3 h-3 rounded-full bg-red-500/80 inline-block"></span>
+                            <span class="w-3 h-3 rounded-full bg-yellow-500/80 inline-block"></span>
+                            <span class="w-3 h-3 rounded-full bg-green-500/80 inline-block"></span>
+                        </div>
+                        <span class="text-xs font-mono text-gray-400">cisco_router_node.sys</span>
+                        <div class="text-xs font-mono text-net-green"><i class="fa-solid fa-bolt animate-pulse"></i> PACKET MONITOR</div>
+                    </div>
+
+                    <!-- Visual Canvas container -->
+                    <div class="h-64 sm:h-80 w-full relative flex items-center justify-center rounded-xl bg-black/50 border border-net-border/30">
+                        <div id="hero-3d-container" class="w-full h-full"></div>
+                        <div class="absolute bottom-3 left-3 right-3 flex justify-between items-center text-[11px] font-mono text-gray-400 bg-black/80 px-3 py-1.5 rounded backdrop-blur border border-gray-800">
+                            <span>PACKET TRAFFIC: OK</span>
+                            <span class="text-net-cyan">OSPF: AREA 0</span>
+                        </div>
+                    </div>
+
+                    <!-- Telemetry Stats Grid -->
+                    <div class="grid grid-cols-3 gap-3 mt-4 text-center font-mono text-xs">
+                        <div class="bg-black/40 p-2 rounded border border-gray-800">
+                            <span class="block text-[10px] text-gray-500">PACKET LOSS</span>
+                            <span class="text-xs font-bold text-net-green">0.00%</span>
+                        </div>
+                        <div class="bg-black/40 p-2 rounded border border-gray-800">
+                            <span class="block text-[10px] text-gray-500">DNS LATENCY</span>
+                            <span class="text-xs font-bold text-net-cyan">&lt; 1ms</span>
+                        </div>
+                        <div class="bg-black/40 p-2 rounded border border-gray-800">
+                            <span class="block text-[10px] text-gray-500">DHCP LEASE</span>
+                            <span class="text-xs font-bold text-net-purple">ACTIVE</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-20 px-6 relative">
+        <div class="max-w-7xl mx-auto">
+            <div class="flex items-center space-x-4 mb-12">
+                <span class="text-net-cyan font-mono text-xl">01.</span>
+                <h2 class="text-2xl sm:text-3xl font-bold text-white tracking-tight">// ABOUT THE ENGINEER</h2>
+                <div class="h-px bg-net-border/40 flex-grow max-w-xs"></div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
+                <!-- Profile Summary -->
+                <div class="lg:col-span-7 glass-panel p-8 rounded-2xl border border-net-border/30 flex flex-col justify-between space-y-6">
+                    <div class="space-y-4">
+                        <div class="flex items-center space-x-3 text-net-green font-mono text-xs sm:text-sm">
+                            <i class="fa-solid fa-server"></i>
+                            <span>SYSTEMS & NETWORK INFRASTRUCTURE ARCHITECTURE</span>
+                        </div>
+                        <h3 class="text-2xl font-bold text-white">Ilyas Zobair — Reliable Network Systems</h3>
+                        <p class="text-gray-300 leading-relaxed text-sm sm:text-base">
+                            I am a dedicated IT Network and Systems Administrator experienced in designing, troubleshooting, and maintaining multi-subnet enterprise networks, server domains, and virtualization clusters.
+                        </p>
+                        <p class="text-gray-400 leading-relaxed text-sm">
+                            My technical focus centers on establishing seamless inter-site network communications, resolving complex cross-domain lookup issues (such as Conditional DNS Forwarders between private zones like `mydomain.ma` and `TEST1.com`), configuring Cisco OSPF backbone routing, managing DHCP scopes, implementing Active Directory Group Policies (GPOs), and configuring Dahua DSS Express IP surveillance platforms.
+                        </p>
+                    </div>
+
+                    <!-- Highlight Specs -->
+                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-6 border-t border-gray-800 font-mono">
+                        <div class="bg-black/40 p-3 rounded border border-gray-800">
+                            <span class="block text-xl font-bold text-net-cyan">99.9%</span>
+                            <span class="text-[11px] text-gray-500">Target Uptime</span>
+                        </div>
+                        <div class="bg-black/40 p-3 rounded border border-gray-800">
+                            <span class="block text-xl font-bold text-net-green">DNS / AD DS</span>
+                            <span class="text-[11px] text-gray-500">Domain Services</span>
+                        </div>
+                        <div class="bg-black/40 p-3 rounded border border-gray-800">
+                            <span class="block text-xl font-bold text-net-purple">Cisco IOS</span>
+                            <span class="text-[11px] text-gray-500">Switching/Routing</span>
+                        </div>
+                        <div class="bg-black/40 p-3 rounded border border-gray-800">
+                            <span class="block text-xl font-bold text-net-amber">DSS Express</span>
+                            <span class="text-[11px] text-gray-500">IP CCTV Platform</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Spec Highlight Grid -->
+                <div class="lg:col-span-5 grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div class="glass-panel p-6 rounded-xl border border-net-border/30 hover:border-net-cyan transition-all">
+                        <div class="w-10 h-10 rounded-lg bg-net-cyan/10 text-net-cyan flex items-center justify-center mb-4 text-xl">
+                            <i class="fa-solid fa-route"></i>
+                        </div>
+                        <h4 class="font-bold text-white text-base mb-1">Cisco Routing & Switching</h4>
+                        <p class="text-gray-400 text-xs">OSPF, RIPv2, Static Routes, Dynamic NAT/PAT, Extended ACLs, and VLAN Trunking (802.1Q).</p>
+                    </div>
+
+                    <div class="glass-panel p-6 rounded-xl border border-net-border/30 hover:border-net-green transition-all">
+                        <div class="w-10 h-10 rounded-lg bg-net-green/10 text-net-green flex items-center justify-center mb-4 text-xl">
+                            <i class="fa-brands fa-windows"></i>
+                        </div>
+                        <h4 class="font-bold text-white text-base mb-1">Windows Server 2022</h4>
+                        <p class="text-gray-400 text-xs">Conditional Forwarders, Active Directory DS, Group Policy (GPO), DHCP, and RSAT PowerShell.</p>
+                    </div>
+
+                    <div class="glass-panel p-6 rounded-xl border border-net-border/30 hover:border-net-purple transition-all">
+                        <div class="w-10 h-10 rounded-lg bg-net-purple/10 text-net-purple flex items-center justify-center mb-4 text-xl">
+                            <i class="fa-solid fa-wifi"></i>
+                        </div>
+                        <h4 class="font-bold text-white text-base mb-1">Wireless & VoIP</h4>
+                        <p class="text-gray-400 text-xs">Cisco Wireless LAN Controllers (WLC), Lightweight APs, WPA2/3 Enterprise, and IP Telephony.</p>
+                    </div>
+
+                    <div class="glass-panel p-6 rounded-xl border border-net-border/30 hover:border-net-amber transition-all">
+                        <div class="w-10 h-10 rounded-lg bg-net-amber/10 text-net-amber flex items-center justify-center mb-4 text-xl">
+                            <i class="fa-solid fa-video"></i>
+                        </div>
+                        <h4 class="font-bold text-white text-base mb-1">Dahua & DSS Express</h4>
+                        <p class="text-gray-400 text-xs">Enterprise Video Management Software (VMS), NVR storage pools, and IP camera infrastructure.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Network Topology & Infrastructure Section -->
+    <section id="topology" class="py-20 px-6 relative bg-black/40">
+        <div class="max-w-7xl mx-auto">
+            <div class="flex items-center space-x-4 mb-12">
+                <span class="text-net-cyan font-mono text-xl">02.</span>
+                <h2 class="text-2xl sm:text-3xl font-bold text-white tracking-tight">// ENTERPRISE NETWORK TOPOLOGY & DNS</h2>
+                <div class="h-px bg-net-border/40 flex-grow max-w-xs"></div>
+            </div>
+
+            <!-- Topology Graphic Showcase -->
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center mb-12">
+                <!-- Diagram Visualizer -->
+                <div class="lg:col-span-7 glass-panel p-6 rounded-2xl border border-net-border/30 font-mono">
+                    <div class="flex justify-between items-center border-b border-gray-800 pb-3 mb-4">
+                        <span class="text-xs text-net-cyan">// INTER-DOMAIN DNS CONDITIONAL FORWARDING TOPOLOGY</span>
+                        <span class="text-[10px] text-net-green bg-net-green/10 px-2 py-0.5 rounded">STATUS: RESOLVING</span>
+                    </div>
+
+                    <!-- Topology Wireframe Schematics -->
+                    <div class="bg-black/70 p-6 rounded-xl border border-gray-800 space-y-6 text-xs text-gray-300">
+                        <div class="flex flex-col sm:flex-row justify-between items-center gap-4 text-center">
+                            <!-- Domain A -->
+                            <div class="p-4 rounded-lg bg-net-dark border border-net-cyan/50 w-full sm:w-1/3">
+                                <i class="fa-brands fa-windows text-2xl text-net-cyan mb-2"></i>
+                                <div class="font-bold text-white">mydomain.ma</div>
+                                <div class="text-[10px] text-gray-400">DNS Server: 192.168.1.1</div>
+                                <div class="text-[10px] text-net-green mt-1">Gateway: 192.168.1.254</div>
+                            </div>
+
+                            <!-- Forwarder Link -->
+                            <div class="flex flex-col items-center">
+                                <span class="text-[10px] text-net-green font-mono mb-1">Conditional Forwarder</span>
+                                <div class="w-24 h-0.5 bg-gradient-to-r from-net-cyan via-net-green to-net-purple relative">
+                                    <div class="w-2 h-2 rounded-full bg-net-green absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 animate-ping"></div>
+                                </div>
+                                <span class="text-[9px] text-gray-400 mt-1">Port 53 UDP/TCP</span>
+                            </div>
+
+                            <!-- Domain B -->
+                            <div class="p-4 rounded-lg bg-net-dark border border-net-purple/50 w-full sm:w-1/3">
+                                <i class="fa-brands fa-windows text-2xl text-net-purple mb-2"></i>
+                                <div class="font-bold text-white">TEST1.com</div>
+                                <div class="text-[10px] text-gray-400">DNS Server: 192.168.3.1</div>
+                                <div class="text-[10px] text-net-green mt-1">Gateway: 192.168.3.254</div>
+                            </div>
+                        </div>
+
+                        <!-- Global Internet Gateway -->
+                        <div class="border-t border-dashed border-gray-800 pt-4 flex justify-between items-center text-[11px]">
+                            <span class="text-gray-400"><i class="fa-solid fa-globe text-net-cyan"></i> Global Forwarder: 8.8.8.8 / 1.1.1.1</span>
+                            <span class="text-net-green"><i class="fa-solid fa-check text-net-green"></i> Firewall Inbound Rules Active</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Explanation Panel -->
+                <div class="lg:col-span-5 space-y-4">
+                    <h3 class="text-xl font-bold text-white">Multi-Domain Resolution & Troubleshooting</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed">
+                        Experienced in diagnosing and resolving inter-server connectivity bottlenecks, "Unknown Error" indicators in Windows DNS Manager, missing gateway routes (`ipconfig`), and firewall profile conflicts (Public vs Private) across multi-site DNS architectures.
+                    </p>
+                    <ul class="space-y-2 font-mono text-xs text-gray-300">
+                        <li class="flex items-center gap-2"><i class="fa-solid fa-check text-net-green"></i> Global DNS Forwarding (`Set-DnsServerForwarder`)</li>
+                        <li class="flex items-center gap-2"><i class="fa-solid fa-check text-net-green"></i> RSAT PowerShell Management (`Import-Module DnsServer`)</li>
+                        <li class="flex items-center gap-2"><i class="fa-solid fa-check text-net-green"></i> Port 53 UDP/TCP Firewall Rule Verification</li>
+                        <li class="flex items-center gap-2"><i class="fa-solid fa-check text-net-green"></i> Default Gateway and Subnet Routing Configuration</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Technical Skills Section -->
+    <section id="skills" class="py-20 px-6 relative">
+        <div class="max-w-7xl mx-auto">
+            <div class="flex items-center space-x-4 mb-12">
+                <span class="text-net-cyan font-mono text-xl">03.</span>
+                <h2 class="text-2xl sm:text-3xl font-bold text-white tracking-tight">// TECHNICAL CAPABILITIES MATRIX</h2>
+                <div class="h-px bg-net-border/40 flex-grow max-w-xs"></div>
+            </div>
+
+            <!-- Skill Cards Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Skill 1 -->
+                <div class="glass-panel p-6 rounded-xl border border-net-border/30 space-y-6">
+                    <div class="flex items-center space-x-3 text-net-cyan border-b border-gray-800 pb-4">
+                        <i class="fa-solid fa-network-wired text-xl"></i>
+                        <h3 class="font-mono font-bold text-lg text-white">CISCO & ROUTING</h3>
+                    </div>
+
+                    <div class="space-y-4 font-mono text-xs">
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <span class="text-gray-300">OSPF & RIPv2 Routing</span>
+                                <span class="text-net-cyan">95%</span>
+                            </div>
+                            <div class="w-full h-2 bg-gray-800 rounded-full overflow-hidden">
+                                <div class="h-full bg-net-cyan rounded-full" style="width: 95%"></div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <span class="text-gray-300">Dynamic NAT / PAT</span>
+                                <span class="text-net-cyan">92%</span>
+                            </div>
+                            <div class="w-full h-2 bg-gray-800 rounded-full overflow-hidden">
+                                <div class="h-full bg-net-cyan rounded-full" style="width: 92%"></div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <span class="text-gray-300">ACLs & VLAN Trunking</span>
+                                <span class="text-net-cyan">90%</span>
+                            </div>
+                            <div class="w-full h-2 bg-gray-800 rounded-full overflow-hidden">
+                                <div class="h-full bg-net-cyan rounded-full" style="width: 90%"></div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <span class="text-gray-300">WLC & Access Points</span>
+                                <span class="text-net-cyan">88%</span>
+                            </div>
+                            <div class="w-full h-2 bg-gray-800 rounded-full overflow-hidden">
+                                <div class="h-full bg-net-cyan rounded-full" style="width: 88%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Skill 2 -->
+                <div class="glass-panel p-6 rounded-xl border border-net-border/30 space-y-6">
+                    <div class="flex items-center space-x-3 text-net-green border-b border-gray-800 pb-4">
+                        <i class="fa-brands fa-windows text-xl"></i>
+                        <h3 class="font-mono font-bold text-lg text-white">WIN SERVER 2022</h3>
+                    </div>
+
+                    <div class="space-y-4 font-mono text-xs">
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <span class="text-gray-300">DNS Conditional Forwarding</span>
+                                <span class="text-net-green">98%</span>
+                            </div>
+                            <div class="w-full h-2 bg-gray-800 rounded-full overflow-hidden">
+                                <div class="h-full bg-net-green rounded-full" style="width: 98%"></div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <span class="text-gray-300">Active Directory DS & GPO</span>
+                                <span class="text-net-green">94%</span>
+                            </div>
+                            <div class="w-full h-2 bg-gray-800 rounded-full overflow-hidden">
+                                <div class="h-full bg-net-green rounded-full" style="width: 94%"></div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <span class="text-gray-300">DHCP Scope & Failover</span>
+                                <span class="text-net-green">91%</span>
+                            </div>
+                            <div class="w-full h-2 bg-gray-800 rounded-full overflow-hidden">
+                                <div class="h-full bg-net-green rounded-full" style="width: 91%"></div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <span class="text-gray-300">PowerShell Management</span>
+                                <span class="text-net-green">89%</span>
+                            </div>
+                            <div class="w-full h-2 bg-gray-800 rounded-full overflow-hidden">
+                                <div class="h-full bg-net-green rounded-full" style="width: 89%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Skill 3 -->
+                <div class="glass-panel p-6 rounded-xl border border-net-border/30 space-y-6">
+                    <div class="flex items-center space-x-3 text-net-amber border-b border-gray-800 pb-4">
+                        <i class="fa-solid fa-server text-xl"></i>
+                        <h3 class="font-mono font-bold text-lg text-white">SYSTEMS & SURVEILLANCE</h3>
+                    </div>
+
+                    <div class="space-y-4 font-mono text-xs">
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <span class="text-gray-300">Dahua / DSS Express VMS</span>
+                                <span class="text-net-amber">93%</span>
+                            </div>
+                            <div class="w-full h-2 bg-gray-800 rounded-full overflow-hidden">
+                                <div class="h-full bg-net-amber rounded-full" style="width: 93%"></div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <span class="text-gray-300">VMware ESXi / vSphere</span>
+                                <span class="text-net-amber">90%</span>
+                            </div>
+                            <div class="w-full h-2 bg-gray-800 rounded-full overflow-hidden">
+                                <div class="h-full bg-net-amber rounded-full" style="width: 90%"></div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <span class="text-gray-300">Network Packet Diagnostics</span>
+                                <span class="text-net-amber">92%</span>
+                            </div>
+                            <div class="w-full h-2 bg-gray-800 rounded-full overflow-hidden">
+                                <div class="h-full bg-net-amber rounded-full" style="width: 92%"></div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <span class="text-gray-300">VoIP & IP Telephony</span>
+                                <span class="text-net-amber">85%</span>
+                            </div>
+                            <div class="w-full h-2 bg-gray-800 rounded-full overflow-hidden">
+                                <div class="h-full bg-net-amber rounded-full" style="width: 85%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Showcase with Filtering -->
+    <section id="projects" class="py-20 px-6 relative bg-black/40">
+        <div class="max-w-7xl mx-auto">
+            <div class="flex items-center space-x-4 mb-8">
+                <span class="text-net-cyan font-mono text-xl">04.</span>
+                <h2 class="text-2xl sm:text-3xl font-bold text-white tracking-tight">// FEATURED INFRASTRUCTURE PROJECTS</h2>
+                <div class="h-px bg-net-border/40 flex-grow max-w-xs"></div>
+            </div>
+
+            <!-- Filter Buttons -->
+            <div class="flex flex-wrap gap-3 mb-8 font-mono text-xs">
+                <button onclick="filterProjects('all')" class="project-filter-btn active px-4 py-2 rounded glass-panel text-net-cyan border border-net-cyan">ALL PROJECTS</button>
+                <button onclick="filterProjects('networking')" class="project-filter-btn px-4 py-2 rounded glass-panel text-gray-400 border border-transparent hover:border-net-cyan">CISCO NETWORKING</button>
+                <button onclick="filterProjects('systems')" class="project-filter-btn px-4 py-2 rounded glass-panel text-gray-400 border border-transparent hover:border-net-green">WINDOWS SERVER</button>
+                <button onclick="filterProjects('surveillance')" class="project-filter-btn px-4 py-2 rounded glass-panel text-gray-400 border border-transparent hover:border-net-amber">DSS EXPRESS / IP CCTV</button>
+            </div>
+
+            <!-- Project Grid -->
+            <div id="projects-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+
+                <!-- Project 1: Conditional Forwarders -->
+                <div class="project-card systems glass-panel rounded-xl overflow-hidden border border-net-border/30 hover:border-net-green transition-all flex flex-col justify-between">
+                    <div class="p-6 space-y-4">
+                        <div class="flex justify-between items-start">
+                            <span class="text-xs font-mono text-net-green"><i class="fa-brands fa-windows"></i> WINDOWS SERVER 2022</span>
+                            <button onclick="openModal('proj-1')" class="text-gray-400 hover:text-net-green text-xs font-mono"><i class="fa-solid fa-expand"></i> DETAILS</button>
+                        </div>
+                        <h3 class="text-lg font-bold text-white">Cross-Domain Conditional Forwarder Mesh</h3>
+                        <p class="text-gray-400 text-xs leading-relaxed">
+                            Configured bidirectional DNS conditional forwarder zones between private domains (`mydomain.ma` at 192.168.1.1 and `TEST1.com` at 192.168.3.1). Resolved network firewall profile blockages and missing gateway configurations using RSAT PowerShell.
+                        </p>
+                    </div>
+                    <div class="px-6 py-3 bg-black/40 border-t border-gray-800 text-[11px] font-mono text-gray-400 flex gap-2">
+                        <span class="text-net-green">#DNS</span>
+                        <span class="text-net-cyan">#PowerShell</span>
+                        <span class="text-white">#ActiveDirectory</span>
+                    </div>
+                </div>
+
+                <!-- Project 2: Cisco OSPF & NAT -->
+                <div class="project-card networking glass-panel rounded-xl overflow-hidden border border-net-border/30 hover:border-net-cyan transition-all flex flex-col justify-between">
+                    <div class="p-6 space-y-4">
+                        <div class="flex justify-between items-start">
+                            <span class="text-xs font-mono text-net-cyan"><i class="fa-solid fa-network-wired"></i> CISCO ROUTING</span>
+                            <button onclick="openModal('proj-2')" class="text-gray-400 hover:text-net-cyan text-xs font-mono"><i class="fa-solid fa-expand"></i> DETAILS</button>
+                        </div>
+                        <h3 class="text-lg font-bold text-white">Multi-Area OSPF & Dynamic PAT Deployment</h3>
+                        <p class="text-gray-400 text-xs leading-relaxed">
+                            Architected an enterprise Cisco router topology using Area 0 OSPF backbone, Dynamic NAT/PAT pool translation for WAN edge breakout, and Extended Access Control Lists (ACLs) for subnet isolation.
+                        </p>
+                    </div>
+                    <div class="px-6 py-3 bg-black/40 border-t border-gray-800 text-[11px] font-mono text-gray-400 flex gap-2">
+                        <span class="text-net-cyan">#Cisco_IOS</span>
+                        <span class="text-net-green">#OSPF</span>
+                        <span class="text-net-amber">#NAT_PAT</span>
+                    </div>
+                </div>
+
+                <!-- Project 3: DSS Express & Dahua -->
+                <div class="project-card surveillance glass-panel rounded-xl overflow-hidden border border-net-border/30 hover:border-net-amber transition-all flex flex-col justify-between">
+                    <div class="p-6 space-y-4">
+                        <div class="flex justify-between items-start">
+                            <span class="text-xs font-mono text-net-amber"><i class="fa-solid fa-video"></i> IP SURVEILLANCE</span>
+                            <button onclick="openModal('proj-3')" class="text-gray-400 hover:text-net-amber text-xs font-mono"><i class="fa-solid fa-expand"></i> DETAILS</button>
+                        </div>
+                        <h3 class="text-lg font-bold text-white">DSS Express Enterprise VMS Deployment</h3>
+                        <p class="text-gray-400 text-xs leading-relaxed">
+                            Deployed Dahua DSS Express Video Management Software managing multi-channel IP camera networks, isolated surveillance VLAN traffic, NVR storage arrays, and client streaming terminals.
+                        </p>
+                    </div>
+                    <div class="px-6 py-3 bg-black/40 border-t border-gray-800 text-[11px] font-mono text-gray-400 flex gap-2">
+                        <span class="text-net-amber">#DSS_Express</span>
+                        <span class="text-net-cyan">#VLAN</span>
+                        <span class="text-net-purple">#Dahua_NVR</span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Professional Experience Timeline -->
+    <section id="experience" class="py-20 px-6 relative">
+        <div class="max-w-7xl mx-auto">
+            <div class="flex items-center space-x-4 mb-12">
+                <span class="text-net-cyan font-mono text-xl">05.</span>
+                <h2 class="text-2xl sm:text-3xl font-bold text-white tracking-tight">// PROFESSIONAL EXPERIENCE & EDUCATION</h2>
+                <div class="h-px bg-net-border/40 flex-grow max-w-xs"></div>
+            </div>
+
+            <div class="relative border-l-2 border-net-border/40 ml-4 md:ml-32 space-y-12 font-mono">
+                <!-- Timeline Item 1 -->
+                <div class="relative pl-8 group">
+                    <div class="absolute -left-[9px] top-1.5 w-4 h-4 rounded-full bg-net-cyan border-4 border-net-black shadow-neon-cyan group-hover:scale-125 transition-transform"></div>
+                    <div class="md:absolute md:-left-36 md:top-1 text-xs text-net-cyan font-bold">2024 — PRESENT</div>
+                    <div class="glass-panel p-6 rounded-xl border border-net-border/30 space-y-2">
+                        <h3 class="text-lg font-bold text-white font-sans">Network & Systems Administrator</h3>
+                        <div class="text-xs text-net-green">Enterprise Network Operations</div>
+                        <p class="text-gray-400 text-xs font-sans leading-relaxed">
+                            Managing Cisco core switches and routers, configuring Active Directory DS infrastructure on Windows Server 2022, overseeing DHCP/DNS services, and maintaining VMware ESXi hypervisors.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Timeline Item 2 -->
+                <div class="relative pl-8 group">
+                    <div class="absolute -left-[9px] top-1.5 w-4 h-4 rounded-full bg-net-green border-4 border-net-black shadow-neon-green group-hover:scale-125 transition-transform"></div>
+                    <div class="md:absolute md:-left-36 md:top-1 text-xs text-net-green font-bold">2022 — 2024</div>
+                    <div class="glass-panel p-6 rounded-xl border border-net-border/30 space-y-2">
+                        <h3 class="text-lg font-bold text-white font-sans">Systems Infrastructure Technician</h3>
+                        <div class="text-xs text-net-cyan">IP Systems & Video Surveillance</div>
+                        <p class="text-gray-400 text-xs font-sans leading-relaxed">
+                            Deployed Dahua DSS Express platforms, configured IP cameras across isolated VLANs, established site-to-site connectivity, and provided tier-2 technical support for Windows domain clients.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Interactive Terminal Widget -->
+    <section id="terminal" class="py-20 px-6 relative bg-black/40">
+        <div class="max-w-5xl mx-auto">
+            <div class="flex items-center space-x-4 mb-8">
+                <span class="text-net-green font-mono text-xl">06.</span>
+                <h2 class="text-2xl sm:text-3xl font-bold text-white tracking-tight">// CLI INTERACTIVE SHELL</h2>
+                <div class="h-px bg-net-border/40 flex-grow max-w-xs"></div>
+            </div>
+
+            <!-- Terminal Container -->
+            <div class="glass-panel rounded-xl border border-net-border shadow-2xl overflow-hidden font-mono">
+                <!-- Header Bar -->
+                <div class="bg-black/80 px-4 py-3 border-b border-net-border/40 flex items-center justify-between">
+                    <div class="flex items-center space-x-2">
+                        <span class="w-3 h-3 rounded-full bg-red-500 inline-block"></span>
+                        <span class="w-3 h-3 rounded-full bg-yellow-500 inline-block"></span>
+                        <span class="w-3 h-3 rounded-full bg-green-500 inline-block"></span>
+                        <span class="text-xs text-gray-400 ml-2">ilyas@zobair-netadmin:~</span>
+                    </div>
+                    <div class="text-xs text-net-cyan flex items-center gap-2">
+                        <i class="fa-solid fa-terminal"></i> POWERSHELL / CLI
+                    </div>
+                </div>
+
+                <!-- Console Display -->
+                <div id="terminal-body" class="p-6 h-80 overflow-y-auto text-xs sm:text-sm space-y-3 bg-black/90 text-gray-200">
+                    <p class="text-net-green">Ilyas Zobair Network Administration Console. Type <span class="text-net-cyan font-bold">'help'</span> for commands.</p>
+                    <div id="cli-output" class="space-y-2"></div>
+                    
+                    <div class="flex items-center space-x-2 pt-2">
+                        <span class="text-net-cyan font-bold">ilyas@net-admin:~$</span>
+                        <input type="text" id="cli-input" class="bg-transparent border-none outline-none text-white w-full font-mono focus:ring-0" placeholder="type command..." autofocus>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-20 px-6 relative">
+        <div class="max-w-7xl mx-auto">
+            <div class="flex items-center space-x-4 mb-12">
+                <span class="text-net-cyan font-mono text-xl">07.</span>
+                <h2 class="text-2xl sm:text-3xl font-bold text-white tracking-tight">// CONTACT ILYAS ZOBAIR</h2>
+                <div class="h-px bg-net-border/40 flex-grow max-w-xs"></div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
+                <!-- Direct Details -->
+                <div class="lg:col-span-5 space-y-6">
+                    <h3 class="text-2xl font-bold text-white">Direct Communication Channels</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed">
+                        Inquiries regarding Cisco network architecture, Windows Server Active Directory / DNS setups, or Dahua DSS Express platforms? Reach out directly.
+                    </p>
+
+                    <div class="space-y-4 font-mono text-sm">
+                        <!-- Email Card -->
+                        <div class="p-4 glass-panel rounded-xl border border-net-border/30 flex items-center justify-between">
+                            <div class="flex items-center space-x-3">
+                                <div class="w-10 h-10 rounded bg-net-cyan/10 text-net-cyan flex items-center justify-center">
+                                    <i class="fa-solid fa-envelope"></i>
+                                </div>
+                                <div>
+                                    <span class="block text-[10px] text-gray-500">EMAIL</span>
+                                    <span class="text-white text-xs">ilyas.zobair@domain.ma</span>
+                                </div>
+                            </div>
+                            <button onclick="copyToClipboard('ilyas.zobair@domain.ma')" class="text-xs text-net-cyan hover:underline">COPY</button>
+                        </div>
+
+                        <!-- Location Card -->
+                        <div class="p-4 glass-panel rounded-xl border border-net-border/30 flex items-center space-x-3">
+                            <div class="w-10 h-10 rounded bg-net-green/10 text-net-green flex items-center justify-center">
+                                <i class="fa-solid fa-location-dot"></i>
+                            </div>
+                            <div>
+                                <span class="block text-[10px] text-gray-500">LOCATION</span>
+                                <span class="text-white text-xs">Network Operations Center / Remote</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Form -->
+                <div class="lg:col-span-7 glass-panel p-8 rounded-2xl border border-net-border/30">
+                    <form id="contact-form" class="space-y-6" onsubmit="event.preventDefault(); handleFormSubmit();">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                            <div>
+                                <label class="block font-mono text-xs text-gray-400 mb-2">// YOUR NAME</label>
+                                <input type="text" required class="w-full bg-black/50 border border-gray-800 rounded-lg px-4 py-3 text-white text-sm focus:border-net-cyan focus:outline-none" placeholder="IT Manager / Recruiter">
+                            </div>
+                            <div>
+                                <label class="block font-mono text-xs text-gray-400 mb-2">// YOUR EMAIL</label>
+                                <input type="email" required class="w-full bg-black/50 border border-gray-800 rounded-lg px-4 py-3 text-white text-sm focus:border-net-cyan focus:outline-none" placeholder="contact@company.com">
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block font-mono text-xs text-gray-400 mb-2">// INQUIRY SUBJECT</label>
+                            <input type="text" required class="w-full bg-black/50 border border-gray-800 rounded-lg px-4 py-3 text-white text-sm focus:border-net-cyan focus:outline-none" placeholder="Network Deployment / SysAdmin Consultation">
+                        </div>
+
+                        <div>
+                            <label class="block font-mono text-xs text-gray-400 mb-2">// MESSAGE DETAILS</label>
+                            <textarea rows="4" required class="w-full bg-black/50 border border-gray-800 rounded-lg px-4 py-3 text-white text-sm focus:border-net-cyan focus:outline-none" placeholder="Describe the system or network requirements..."></textarea>
+                        </div>
+
+                        <button type="submit" class="w-full py-4 rounded-lg bg-net-cyan text-black font-mono font-bold hover:bg-cyan-400 shadow-neon-cyan transition-all flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-paper-plane"></i> TRANSMIT MESSAGE TO ILYAS
+                        </button>
+
+                        <div id="form-status" class="hidden p-3 rounded bg-net-green/10 border border-net-green text-net-green text-xs font-mono text-center">
+                            ✔ Transmission successfully logged! Ilyas will respond shortly.
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Details Modal -->
+    <div id="project-modal" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="glass-panel p-6 rounded-2xl border border-net-cyan max-w-2xl w-full font-mono relative">
+            <button onclick="closeModal()" class="absolute top-4 right-4 text-gray-400 hover:text-white"><i class="fa-solid fa-xmark text-xl"></i></button>
+            <div id="modal-content"></div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="border-t border-gray-900 py-8 px-6 font-mono text-xs text-gray-500">
+        <div class="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-4">
+            <div>ILYAS ZOBAIR // NETWORK & SYSTEMS ADMINISTRATOR © 2026</div>
+            <div class="text-net-green"><i class="fa-solid fa-circle text-[8px] text-net-green animate-pulse"></i> NETWORK ONLINE</div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script>
+        // ----------------------------------------------------
+        // 1. THREE.JS NETWORK TOPOLOGY 3D BACKGROUND
+        // ----------------------------------------------------
+        const canvas = document.getElementById('bg-3d-canvas');
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true, antialias: true });
+
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+        // Network Nodes Graph
+        const nodeCount = 45;
+        const nodes = [];
+        const nodeGeo = new THREE.SphereGeometry(0.09, 16, 16);
+        const nodeMat = new THREE.MeshBasicMaterial({ color: 0x00d8ff });
+
+        for (let i = 0; i < nodeCount; i++) {
+            const mesh = new THREE.Mesh(nodeGeo, nodeMat);
+            mesh.position.set(
+                (Math.random() - 0.5) * 14,
+                (Math.random() - 0.5) * 14,
+                (Math.random() - 0.5) * 14
+            );
+            nodes.push(mesh);
+            scene.add(mesh);
+        }
+
+        // Connecting lines for topology
+        const lineMat = new THREE.LineBasicMaterial({ color: 0x00ff88, transparent: true, opacity: 0.18 });
+        const lineGeo = new THREE.BufferGeometry();
+        const positions = new Float32Array(nodeCount * nodeCount * 3);
+        lineGeo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+        const lineMesh = new THREE.LineSegments(lineGeo, lineMat);
+        scene.add(lineMesh);
+
+        camera.position.z = 7;
+
+        let mouseX = 0, mouseY = 0;
+        window.addEventListener('mousemove', (e) => {
+            mouseX = (e.clientX / window.innerWidth) - 0.5;
+            mouseY = (e.clientY / window.innerHeight) - 0.5;
+        });
+
+        function animate3D() {
+            requestAnimationFrame(animate3D);
+
+            let ptr = 0;
+            const posAttr = lineGeo.attributes.position;
+
+            for (let i = 0; i < nodeCount; i++) {
+                for (let j = i + 1; j < nodeCount; j++) {
+                    const dist = nodes[i].position.distanceTo(nodes[j].position);
+                    if (dist < 2.6) {
+                        posAttr.array[ptr++] = nodes[i].position.x;
+                        posAttr.array[ptr++] = nodes[i].position.y;
+                        posAttr.array[ptr++] = nodes[i].position.z;
+
+                        posAttr.array[ptr++] = nodes[j].position.x;
+                        posAttr.array[ptr++] = nodes[j].position.y;
+                        posAttr.array[ptr++] = nodes[j].position.z;
+                    }
+                }
+            }
+            posAttr.needsUpdate = true;
+
+            scene.rotation.y += 0.0015;
+            scene.rotation.x += (mouseY * 0.15 - scene.rotation.x) * 0.05;
+            scene.rotation.y += (mouseX * 0.15 - scene.rotation.y) * 0.05;
+
+            renderer.render(scene, camera);
+        }
+        animate3D();
+
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+
+        // ----------------------------------------------------
+        // 2. HERO CARD 3D VISUALIZER
+        // ----------------------------------------------------
+        const heroContainer = document.getElementById('hero-3d-container');
+        if (heroContainer) {
+            const hScene = new THREE.Scene();
+            const hCamera = new THREE.PerspectiveCamera(50, heroContainer.clientWidth / heroContainer.clientHeight, 0.1, 100);
+            const hRenderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+
+            hRenderer.setSize(heroContainer.clientWidth, heroContainer.clientHeight);
+            heroContainer.appendChild(hRenderer.domElement);
+
+            const icoGeo = new THREE.IcosahedronGeometry(1.2, 1);
+            const icoMat = new THREE.MeshBasicMaterial({ color: 0x00d8ff, wireframe: true });
+            const icoMesh = new THREE.Mesh(icoGeo, icoMat);
+            hScene.add(icoMesh);
+
+            hCamera.position.z = 3.5;
+
+            function animateHeroCard() {
+                requestAnimationFrame(animateHeroCard);
+                icoMesh.rotation.x += 0.008;
+                icoMesh.rotation.y += 0.012;
+                hRenderer.render(hScene, hCamera);
+            }
+            animateHeroCard();
+        }
+
+        // ----------------------------------------------------
+        // 3. TYPING TEXT EFFECT
+        // ----------------------------------------------------
+        const phrases = [
+            "IT Network & Systems Administrator",
+            "Cisco Routing Specialist (OSPF / NAT / ACL)",
+            "Windows Server 2022 DNS & Active Directory",
+            "Dahua & DSS Express VMS Integrator"
+        ];
+        let pIdx = 0, cIdx = 0, isDeleting = false;
+        const typingEl = document.getElementById('typing-text');
+
+        function typeLoop() {
+            const current = phrases[pIdx];
+            typingEl.textContent = isDeleting ? current.substring(0, cIdx - 1) : current.substring(0, cIdx + 1);
+            cIdx += isDeleting ? -1 : 1;
+
+            let speed = isDeleting ? 25 : 60;
+            if (!isDeleting && cIdx === current.length) { speed = 2200; isDeleting = true; }
+            else if (isDeleting && cIdx === 0) { isDeleting = false; pIdx = (pIdx + 1) % phrases.length; speed = 400; }
+
+            setTimeout(typeLoop, speed);
+        }
+        typeLoop();
+
+        // ----------------------------------------------------
+        // 4. INTERACTIVE CLI TERMINAL WIDGET
+        // ----------------------------------------------------
+        const cliInput = document.getElementById('cli-input');
+        const cliOutput = document.getElementById('cli-output');
+        const termBody = document.getElementById('terminal-body');
+
+        const commands = {
+            help: "Available Commands:<br>- <span class='text-net-cyan'>whoami</span>: Profile summary<br>- <span class='text-net-cyan'>network</span>: Network architecture overview<br>- <span class='text-net-cyan'>cisco</span>: Cisco routing & switching specs<br>- <span class='text-net-cyan'>win-server</span>: Windows Server 2022 DNS/AD details<br>- <span class='text-net-cyan'>topology</span>: DNS Forwarder topology specs<br>- <span class='text-net-cyan'>skills</span>: Technical capabilities list<br>- <span class='text-net-cyan'>projects</span>: Featured infrastructure deployments<br>- <span class='text-net-cyan'>contact</span>: Get Ilyas's contact details<br>- <span class='text-net-cyan'>clear</span>: Clear console",
+            whoami: "<span class='text-net-green'>Ilyas Zobair</span> — IT Network & Systems Administrator specializing in Cisco enterprise infrastructure, Windows Server 2022, VMware virtualization, and Dahua DSS Express VMS.",
+            network: "IP Gateway: <span class='text-net-cyan'>192.168.1.1</span> | Routing Protocols: OSPF Area 0, RIPv2 | Subnet Masks: 255.255.255.0 (/24)",
+            cisco: "Cisco Stack: IOS, OSPF Area 0, Dynamic NAT/PAT, Standard & Extended Access Control Lists (ACLs), WLC 3504, 802.1Q VLAN Trunking.",
+            "win-server": "WinServer 2022 Stack: Active Directory DS, DNS Conditional Forwarding, DHCP Failover Scopes, Group Policy Objects (GPOs), RSAT PowerShell.",
+            topology: "Domain A: <span class='text-net-cyan'>mydomain.ma</span> (192.168.1.1) <br>Domain B: <span class='text-net-purple'>TEST1.com</span> (192.168.3.1) <br>Forwarder Status: Bidirectional Port 53 UDP/TCP Validated.",
+            skills: "- Cisco IOS / OSPF / NAT / ACLs / WLC<br>- Windows Server 2022 (DNS Forwarders, Active Directory, DHCP)<br>- Dahua DSS Express VMS & VMware ESXi Hypervisors",
+            projects: "1. Cross-Domain Conditional Forwarder Mesh<br>2. Multi-Area OSPF & Dynamic PAT Deployment<br>3. DSS Express Surveillance Integration",
+            contact: "Email: <span class='text-net-cyan'>ilyas.zobair@domain.ma</span> | Status: Available"
+        };
+
+        if (cliInput) {
+            cliInput.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter') {
+                    const cmd = cliInput.value.trim().toLowerCase();
+                    cliInput.value = '';
+
+                    const line = document.createElement('div');
+                    line.innerHTML = `<span class="text-net-cyan font-bold">ilyas@net-admin:~$</span> ${cmd}`;
+                    cliOutput.appendChild(line);
+
+                    const response = document.createElement('div');
+                    response.className = 'pl-4 text-gray-300 font-mono text-xs my-1';
+
+                    if (cmd === 'clear') {
+                        cliOutput.innerHTML = '';
+                    } else if (commands[cmd]) {
+                        response.innerHTML = commands[cmd];
+                        cliOutput.appendChild(response);
+                    } else if (cmd !== '') {
+                        response.innerHTML = `<span class="text-red-400">Command not recognized: '${cmd}'. Type 'help' for available commands.</span>`;
+                        cliOutput.appendChild(response);
+                    }
+
+                    termBody.scrollTop = termBody.scrollHeight;
+                }
+            });
+        }
+
+        // ----------------------------------------------------
+        // 5. PROJECT FILTERING
+        // ----------------------------------------------------
+        function filterProjects(category) {
+            const cards = document.querySelectorAll('.project-card');
+            const btns = document.querySelectorAll('.project-filter-btn');
+
+            btns.forEach(btn => {
+                btn.classList.remove('active', 'text-net-cyan', 'border-net-cyan');
+                btn.classList.add('text-gray-400', 'border-transparent');
+            });
+
+            event.target.classList.add('active', 'text-net-cyan', 'border-net-cyan');
+            event.target.classList.remove('text-gray-400', 'border-transparent');
+
+            cards.forEach(card => {
+                if (category === 'all' || card.classList.contains(category)) {
+                    card.style.display = 'flex';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
+        // ----------------------------------------------------
+        // 6. MODAL HANDLER
+        // ----------------------------------------------------
+        const modal = document.getElementById('project-modal');
+        const modalContent = document.getElementById('modal-content');
+
+        const modalDetails = {
+            'proj-1': {
+                title: 'Cross-Domain Conditional Forwarder Mesh',
+                tech: 'Windows Server 2022 // DNS // PowerShell',
+                desc: 'Detailed setup of bidirectional conditional forwarding zones between private enterprise domains (mydomain.ma and TEST1.com). Resolved firewall profile mismatches and missing gateway parameters using RSAT PowerShell cmdlets (Add-DnsServerConditionalForwarderZone, Set-DnsServerForwarder).'
+            },
+            'proj-2': {
+                title: 'Multi-Area OSPF & Dynamic PAT Deployment',
+                tech: 'Cisco IOS // OSPF // NAT/PAT // ACLs',
+                desc: 'Designed an enterprise Cisco topology featuring OSPF Area 0 backbone routing, dynamic Port Address Translation (PAT) pools for outbound Internet traffic, and Extended Access Control Lists (ACLs) for sub-network traffic management.'
+            },
+            'proj-3': {
+                title: 'DSS Express Enterprise VMS Deployment',
+                tech: 'Dahua DSS Express // VLAN // NVR Pools',
+                desc: 'Architected and deployed Dahua DSS Express Video Management Software. Segregated surveillance traffic across dedicated VLANs, configured NVR storage retention pools, and provisioned streaming endpoints.'
+            }
+        };
+
+        function openModal(id) {
+            const data = modalDetails[id];
+            if (!data) return;
+
+            modalContent.innerHTML = `
+                <div class="space-y-4">
+                    <span class="text-xs text-net-cyan">${data.tech}</span>
+                    <h3 class="text-2xl font-bold text-white">${data.title}</h3>
+                    <p class="text-gray-300 text-xs sm:text-sm leading-relaxed">${data.desc}</p>
+                    <div class="pt-4 border-t border-gray-800 flex justify-end">
+                        <button onclick="closeModal()" class="px-4 py-2 bg-net-cyan text-black text-xs font-bold rounded">CLOSE</button>
+                    </div>
+                </div>
+            `;
+            modal.classList.remove('hidden');
+        }
+
+        function closeModal() {
+            modal.classList.add('hidden');
+        }
+
+        // ----------------------------------------------------
+        // 7. UTILITIES & FORM
+        // ----------------------------------------------------
+        function copyToClipboard(text) {
+            const el = document.createElement('textarea');
+            el.value = text;
+            document.body.appendChild(el);
+            el.select();
+            document.execCommand('copy');
+            document.body.removeChild(el);
+
+            alert('Copied to clipboard: ' + text);
+        }
+
+        function handleFormSubmit() {
+            const status = document.getElementById('form-status');
+            status.classList.remove('hidden');
+            setTimeout(() => {
+                status.classList.add('hidden');
+            }, 4000);
+        }
+
+        // Mobile Menu Toggle
+        const mobileBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        if (mobileBtn && mobileMenu) {
+            mobileBtn.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+        }
+    </script>
+</body>
+</html>
